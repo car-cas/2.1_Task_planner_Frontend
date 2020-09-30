@@ -9,6 +9,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import UserList from './UserList'
 import "./style.css"
 
 export class Login extends React.Component{
@@ -18,7 +19,25 @@ export class Login extends React.Component{
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleUser = this.handleUser.bind(this);
         this.handlePass = this.handlePass.bind(this);
+        this.state = {
+            usersList: [],
+        };
     }
+
+    componentDidMount() {
+        fetch('http://taskplanner.westeurope.azurecontainer.io:8080/')
+            .then(response => response.json())
+            .then(data => {
+                let userList = [];
+                data.forEach(function (user) {
+                    userList.push({
+                       user
+                    })
+                });
+                this.setState({usersList: userList}); 
+            });
+    }
+
     render(){
         return (
             <React.Fragment>
@@ -46,6 +65,10 @@ export class Login extends React.Component{
                             <Link href="./UserProfile" variant="body2"> Create Account </Link>
                         </form>
                     </Paper>
+                    <br></br>
+                    <div>
+                        <UserList usersList={this.state.usersList}/>
+                    </div>
                 </main>
             </React.Fragment>
         );

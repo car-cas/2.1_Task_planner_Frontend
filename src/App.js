@@ -9,23 +9,11 @@ import {FilterTask} from "./components/FilterTask";
 import {UserProfile} from "./components/UserProfile";
 
 class App extends Component{
-    constructor(props) {
-        super(props);
-        localStorage.setItem('email', "admin");
-        localStorage.setItem('password', "admin");
-        this.state = {
-          userList: [],
-      };
+  constructor(props) {
+      super(props);
+      localStorage.setItem('email', "admin");
+      localStorage.setItem('password', "admin");
   }
-
-  componentDidMount() {
-    fetch("http://taskplannerbackend.westus.azurecontainer.io:8080/users")
-        .then(response => response.json())
-        .then(data => {
-            let userList = [];
-            this.setState({userList: userList});
-        });
-}
 
   render(){
     const LoginView = () => (
