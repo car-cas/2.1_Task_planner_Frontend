@@ -13,7 +13,19 @@ class App extends Component{
         super(props);
         localStorage.setItem('email', "admin");
         localStorage.setItem('password', "admin");
+        this.state = {
+          userList: [],
+      };
   }
+
+  componentDidMount() {
+    fetch("http://taskplannerbackend.westus.azurecontainer.io:8080/users")
+        .then(response => response.json())
+        .then(data => {
+            let userList = [];
+            this.setState({userList: userList});
+        });
+}
 
   render(){
     const LoginView = () => (

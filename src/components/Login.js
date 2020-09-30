@@ -18,6 +18,11 @@ export class Login extends React.Component{
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleUser = this.handleUser.bind(this);
         this.handlePass = this.handlePass.bind(this);
+        fetch("http://taskplannerbackend.westus.azurecontainer.io:8080/users")
+        .then(response=>response.json()).then((data)=>{
+            console.log(data);
+            localStorage.setItem("users",JSON.stringify(data));
+        }).catch(err=>alert("Error"));
     }
     render(){
         return (
@@ -57,6 +62,9 @@ export class Login extends React.Component{
         this.setState({password: pass.target.value});
     }
     handleSubmit(){
+        console.log(localStorage.getItem("users"));
+        var listUsers = JSON.parse(localStorage.getItem("users"));
+        console.log(listUsers);
         if (localStorage.getItem("email") === this.state.email && localStorage.getItem("password") === this.state.password){
             localStorage.setItem("isLoggedIn", true);
             this.props.handleLogin();
